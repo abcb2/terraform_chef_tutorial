@@ -2,7 +2,12 @@ provider "aws" {
   region = "ap-northeast-1"
 }
 
-//resource "aws_instance" "kwata" {
+//resource "aws_instance" "chef-workstation" {
+//  ami = "ami-92df37ed"
+//  instance_type = "t2.micro"
+//}
+
+//resource "aws_instance" "chef-server" {
 //  ami = "ami-92df37ed"
 //  instance_type = "t2.micro"
 //}
