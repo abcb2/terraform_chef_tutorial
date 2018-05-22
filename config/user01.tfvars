@@ -18,4 +18,7 @@ chef_nodes_instance_type = "t2.micro" # [ t2.micro | t2.medium ]
 chef_nodes_private_ip = "10.10.10.11"
 
 chef_server = "1"
+chef_server_ami = "ami-92df37ed" # amazon-linux
+chef_server_instance_type = "t2.medium" # [ t2.micro | t2.medium ]
+chef_server_private_ip = "10.10.10.21"
 

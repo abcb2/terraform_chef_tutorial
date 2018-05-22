@@ -9,7 +9,9 @@ variable "chef_nodes_ami" {}
 variable "chef_nodes_instance_type" {}
 variable "chef_nodes_private_ip" {}
 variable "chef_server" {}
-
+variable "chef_server_ami" {}
+variable "chef_server_instance_type" {}
+variable "chef_server_private_ip" {}
 
 # credentialはawscliで作成した~/.aws以下のものを読み込んでくれる。
 provider "aws" {
@@ -98,6 +100,23 @@ resource "aws_route_table_association" "chef_sample_association" {
   subnet_id = "${aws_subnet.chef_sample_subnet.id}"
 }
 
+data "template_file" "hosts" {
+  template = "${file("${path.module}/config/hosts.${var.user}.tpl")}"
+  //  vars {
+  //    consul_address = "hogehoge"
+  //  }
+}
+
+data "template_cloudinit_config" "hosts" {
+  gzip = true
+  base64_encode = true
+
+  part {
+    content_type = "text/x-shellscript"
+    content = "${data.template_file.hosts.rendered}"
+  }
+}
+
 resource "aws_instance" "chef-node" {
   count = "${var.chef_nodes}"
   ami = "${var.chef_nodes_ami}"
@@ -109,12 +128,22 @@ resource "aws_instance" "chef-node" {
   security_groups = [
     "${aws_default_security_group.chef_sample.id}"
   ]
+  user_data = "${data.template_cloudinit_config.hosts.rendered}"
 }
 
-//resource "aws_instance" "chef-server" {
-//  ami = "ami-92df37ed"
-//  instance_type = "t2.micro"
-//}
+resource "aws_instance" "chef-server" {
+  count = "${var.chef_server}"
+  ami = "${var.chef_server_ami}"
+  instance_type = "${var.chef_server_instance_type}"
+  key_name = "${var.instance_key_name}"
+  subnet_id = "${aws_subnet.chef_sample_subnet.id}"
+  private_ip = "${element(split(",", var.chef_server_private_ip), count.index)}"
+  associate_public_ip_address = true
+  security_groups = [
+    "${aws_default_security_group.chef_sample.id}"
+  ]
+  user_data = "${data.template_cloudinit_config.hosts.rendered}"
+}
 
 output "configuration" {
   value = <<CONFIG

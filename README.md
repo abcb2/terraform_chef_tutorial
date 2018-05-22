@@ -29,4 +29,14 @@ https://github.com/hashicorp/best-practices
 - https://github.com/terraform-providers/terraform-provider-aws/tree/master/examples
 - https://github.com/terraform-providers/terraform-provider-azurerm/tree/master/examples
 
+# 鍵の管理
+aws consoleのEC2管理画面でkeyを作成して、それをtfファイル内で指定している。
 
+chef-nodeとchef-server(workstation)間でsshで手軽に行き来したかったので、鍵を保持してしまっている。
+
+適宜差し替えが必要。
+
+秘密鍵から公開鍵を作成する場合は以下のコマンドでいけるはず
+```
+$ ssh-keygen -y -f ~/.ssh/chef_sample.pem > ~/.ssh/chef_sample.pub
+```
