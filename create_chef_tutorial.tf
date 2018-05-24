@@ -131,19 +131,19 @@ resource "aws_instance" "chef-node" {
   user_data = "${data.template_cloudinit_config.hosts.rendered}"
 }
 
-resource "aws_instance" "chef-server" {
-  count = "${var.chef_server}"
-  ami = "${var.chef_server_ami}"
-  instance_type = "${var.chef_server_instance_type}"
-  key_name = "${var.instance_key_name}"
-  subnet_id = "${aws_subnet.chef_sample_subnet.id}"
-  private_ip = "${element(split(",", var.chef_server_private_ip), count.index)}"
-  associate_public_ip_address = true
-  security_groups = [
-    "${aws_default_security_group.chef_sample.id}"
-  ]
-  user_data = "${data.template_cloudinit_config.hosts.rendered}"
-}
+//resource "aws_instance" "chef-server" {
+//  count = "${var.chef_server}"
+//  ami = "${var.chef_server_ami}"
+//  instance_type = "${var.chef_server_instance_type}"
+//  key_name = "${var.instance_key_name}"
+//  subnet_id = "${aws_subnet.chef_sample_subnet.id}"
+//  private_ip = "${element(split(",", var.chef_server_private_ip), count.index)}"
+//  associate_public_ip_address = true
+//  security_groups = [
+//    "${aws_default_security_group.chef_sample.id}"
+//  ]
+//  user_data = "${data.template_cloudinit_config.hosts.rendered}"
+//}
 
 output "configuration" {
   value = <<CONFIG

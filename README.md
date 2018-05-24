@@ -40,3 +40,6 @@ chef-nodeとchef-server(workstation)間でsshで手軽に行き来したかっ�
 ```
 $ ssh-keygen -y -f ~/.ssh/chef_sample.pem > ~/.ssh/chef_sample.pub
 ```
+
+# その他
+[cloud-initに関して](docs/cloud-init.md)
