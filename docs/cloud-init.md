@@ -6,7 +6,7 @@ amazon-linux上では下記のバージョンが使われている。古い。�
 cloud-init 0.7.6
 ```
 
-# mime type指定の方法
+# mime type指定したuser_dataを使う方法
 
 - text/x-include-once-url
 - text/x-include-url
@@ -29,3 +29,34 @@ cloud-init 0.7.6
   - /var/lib/cloud以下にファイルが保持される
   - 即時実行する
   - 1回だけの実行という仕組みができない
+
+# Directoryレイアウト
+
+```
+/var/lib/cloud/
+    - data/
+       - instance-id
+       - previous-instance-id
+       - datasource
+       - previous-datasource
+       - previous-hostname
+    - handlers/
+    - instance
+    - instances/
+        i-00000XYZ/
+          - boot-finished
+          - cloud-config.txt
+          - datasource
+          - handlers/
+          - obj.pkl
+          - scripts/
+          - sem/
+          - user-data.txt
+          - user-data.txt.i
+    - scripts/
+       - per-boot/
+       - per-instance/
+       - per-once/
+    - seed/
+    - sem/
+```

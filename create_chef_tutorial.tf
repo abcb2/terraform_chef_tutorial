@@ -100,20 +100,29 @@ resource "aws_route_table_association" "chef_sample_association" {
   subnet_id = "${aws_subnet.chef_sample_subnet.id}"
 }
 
-data "template_file" "hosts" {
-  template = "${file("${path.module}/config/hosts.${var.user}.tpl")}"
-  //  vars {
-  //    consul_address = "hogehoge"
-  //  }
+//data "template_file" "hosts" {
+//  template = "${file("${path.module}/config/hosts.${var.user}.tpl")}"
+//  //  vars {
+//  //    consul_address = "hogehoge"
+//  //  }
+//}
+
+data "template_file" "cloud_init" {
+  template = "${file("${path.module}/config/cloud_init.${var.user}.tpl")}"
 }
 
 data "template_cloudinit_config" "hosts" {
   gzip = true
   base64_encode = true
 
+//  part {
+//    content_type = "text/x-shellscript"
+//    content = "${data.template_file.hosts.rendered}"
+//  }
   part {
-    content_type = "text/x-shellscript"
-    content = "${data.template_file.hosts.rendered}"
+    filename = "sample"
+    content_type = "text/cloud-config"
+    content = "${data.template_file.cloud_init.rendered}"
   }
 }
 
