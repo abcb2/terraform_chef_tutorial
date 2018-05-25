@@ -6,6 +6,8 @@ amazon-linux上では下記のバージョンが使われている。古い。�
 cloud-init 0.7.6
 ```
 
+公式ドキュメントは[ここ](https://cloudinit.readthedocs.io/en/0.7.7)
+
 # mime type指定したuser_dataを使う方法
 
 - text/x-include-once-url
