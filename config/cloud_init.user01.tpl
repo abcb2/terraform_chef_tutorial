@@ -22,3 +22,10 @@ write_files:
      10.10.10.21 chef-server.user01.com chef-server
    path: /etc/hosts
    permissions: '0644'
+
+power_state:
+ delay: "now"
+ mode: reboot
+ message: "reboot by cloud-init"
+ timeout: 5
+ condition: True

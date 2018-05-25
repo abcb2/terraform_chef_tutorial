@@ -104,14 +104,22 @@ data "template_file" "cloud_init" {
   template = "${file("${path.module}/config/cloud_init.${var.user}.tpl")}"
 }
 
+data "template_file" "cloud_init_shell" {
+  template = "${file("${path.module}/config/cloud_init_shell.${var.user}.tpl")}"
+}
+
 data "template_cloudinit_config" "cloud_config" {
   gzip = true
   base64_encode = true
 
   part {
-    filename = "sample"
     content_type = "text/cloud-config"
     content = "${data.template_file.cloud_init.rendered}"
+  }
+  part {
+    filename = "shell_hostname"
+    content_type = "text/x-shellscript"
+    content = "${data.template_file.cloud_init_shell.rendered}"
   }
 }
 
@@ -128,7 +136,8 @@ resource "aws_instance" "chef-node" {
   ]
   user_data = "${data.template_cloudinit_config.cloud_config.rendered}"
   tags {
-    Name = "chef_node_${var.user}_${count.index}"
+    Name = "chef_node_${var.user}_${count.index + 1}"
+    HostName = "node${count.index + 1}.${var.user}.com"
   }
 }
 
@@ -146,6 +155,7 @@ resource "aws_instance" "chef-server" {
   user_data = "${data.template_cloudinit_config.cloud_config.rendered}"
   tags {
     Name = "chef_server.${var.user}"
+    HostName = "chef-server.${var.user}.com"
   }
 }
 
