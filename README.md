@@ -48,5 +48,31 @@ EC2管理画面で生成する鍵とは別の鍵を設置しようと思った�
 $ ssh-keygen -y -f ~/.ssh/chef_sample.pem > ~/.ssh/chef_sample.pub
 ```
 
+# terraformでのインフラ準備
+
+## validate
+
+```
+$ terraform plan  -var-file=config/user01.tfvars
+```
+
+## 実行
+
+```
+$ terraform apply -var-file=config/user01.tfvars
+```
+
+## 削除
+
+```
+$ terraform destroy -var-file=config/user01.tfvars
+```
+
+# chef tutorial
+
+[ここ](https://qiita.com/abcb2/items/f3f390ee7f83943293fc)を参考に。。
+
+chef-workstationとchef-serverは同一の場所にしている。
+
 # その他
 [cloud-initに関して](docs/cloud-init.md)
