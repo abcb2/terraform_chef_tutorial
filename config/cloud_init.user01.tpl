@@ -22,4 +22,3 @@ write_files:
      10.10.10.21 chef-server.user01.com chef-server
    path: /etc/hosts
    permissions: '0644'
-

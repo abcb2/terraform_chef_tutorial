@@ -34,6 +34,8 @@ cloud-init 0.7.6
 
 # Directoryレイアウト
 
+/var/lib/cloud 以下と /etc/cloud 以下が存在する
+
 ```
 /var/lib/cloud/
     - data/
@@ -62,3 +64,26 @@ cloud-init 0.7.6
     - seed/
     - sem/
 ```
+
+```
+/etc/cloud/
+├── cloud.cfg
+├── cloud.cfg.d
+│   ├── 00_defaults.cfg
+│   ├── 05_logging.cfg
+│   ├── 10_aws_yumvars.cfg
+│   └── README
+└── templates
+    ├── chef_client.rb.tmpl
+    ├── hosts.debian.tmpl
+    ├── hosts.freebsd.tmpl
+    ├── hosts.redhat.tmpl
+    ├── hosts.suse.tmpl
+    ├── resolv.conf.tmpl
+    ├── sources.list.debian.tmpl
+    └── sources.list.ubuntu.tmpl
+```
+
+# log
+- /var/log/cloud-init.log
+- /var/log/cloud-init-output.log

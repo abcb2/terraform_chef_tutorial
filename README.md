@@ -14,7 +14,6 @@ Jetbrainsのpluginが良い感じなのでJetbrains系のIDEを使う
 https://plugins.jetbrains.com/plugin/7808-hashicorp-terraform--hcl-language-support
 
 # terraformの習熟に向けて
-- 使い込みが足りないので妄想が入っているかもしれないので注意
 - aws, azureあたりで使うことを想定
 - openstackでの利用は挫折している
 
@@ -30,13 +29,21 @@ https://github.com/hashicorp/best-practices
 - https://github.com/terraform-providers/terraform-provider-azurerm/tree/master/examples
 
 # 鍵の管理
-aws consoleのEC2管理画面でkeyを作成して、それをtfファイル内で指定している。
+aws consoleのEC2管理画面でkeyを作成して、それをこのレポジトリ外で管理している。
 
-chef-nodeとchef-server(workstation)間でsshで手軽に行き来したかったので、鍵を保持してしまっている。
+chef-nodeとchef-server(workstation)間をsshで手軽に行き来したかったので、ssh-agentを利用してエージェントフォワーディングしている。
 
-適宜差し替えが必要。
+```
+$ ssh -A -i /path/to/key_of_ec2 ec2-user@xxx.xxx.xxx.xxx
+$ ssh -A chef-server
+```
 
-秘密鍵から公開鍵を作成する場合は以下のコマンドでいけるはず
+EC2管理画面で生成する鍵とは別の鍵を設置しようと思ったが少しはまったのでagent-forwardingでのやり方しかここには記述していない。
+
+## tips
+
+秘密鍵から公開鍵を作成する場合は以下のコマンド
+
 ```
 $ ssh-keygen -y -f ~/.ssh/chef_sample.pem > ~/.ssh/chef_sample.pub
 ```
