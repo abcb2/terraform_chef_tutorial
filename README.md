@@ -33,12 +33,20 @@ aws consoleのEC2管理画面でkeyを作成して、それをこのレポジト
 
 chef-nodeとchef-server(workstation)間をsshで手軽に行き来したかったので、ssh-agentを利用してエージェントフォワーディングしている。
 
+chefのbootstrapのためにrootユーザーでも行き来できるようにcloud-initのshellスクリプト実行で鍵は配布している。
+
+つまるところssh-agentは使わないでもよいが、記述は残しておく。
+
+ssh-agentを起動して鍵を追加しておく
+```
+$ ssh-agent
+$ ssh-add ~/.ssh/chef_sample.pem
+```
+
 ```
 $ ssh -A -i /path/to/key_of_ec2 ec2-user@xxx.xxx.xxx.xxx
 $ ssh -A chef-server
 ```
-
-EC2管理画面で生成する鍵とは別の鍵を設置しようと思ったが少しはまったのでagent-forwardingでのやり方しかここには記述していない。
 
 ## tips
 
