@@ -29,7 +29,7 @@ https://github.com/hashicorp/best-practices
 - https://github.com/terraform-providers/terraform-provider-azurerm/tree/master/examples
 
 # 鍵の管理
-aws consoleのEC2管理画面でkeyを作成して、それをこのレポジトリ外で管理している。
+aws consoleのEC2管理画面でkeyを作成して、それをこのレポジトリ外で管理しようとしたが、後述のbootstrapのために必要になったのでcloud-initのshellscriptを利用してrootとec2-userの.ssh以下に書き込んでいる。
 
 chef-nodeとchef-server(workstation)間をsshで手軽に行き来したかったので、ssh-agentを利用してエージェントフォワーディングしている。
 
